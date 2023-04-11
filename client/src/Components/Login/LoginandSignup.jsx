@@ -43,7 +43,7 @@ const LoginandSignup = () => {
 
   const handleSignupSubmit = (e) => {
     e.preventDefault();
-    axios.post('http://localhost:8080/users', signupForm)
+    axios.post('https://bmi-assignment.vercel.app/users', signupForm)
       .then((response) => {
         setSignupForm({ name: "", email: "", password: "" });
         toast({
@@ -76,7 +76,7 @@ const LoginandSignup = () => {
 
   const handleLoginSubmit = (e) => {
     e.preventDefault();
-    axios.post('http://localhost:8080/users/login', loginform)
+    axios.post('https://bmi-assignment.vercel.app/users/login', loginform)
       .then((response) => {
         cookies.set('jwt' , response.data.token , {
           maxAge:24 * 60 * 60,

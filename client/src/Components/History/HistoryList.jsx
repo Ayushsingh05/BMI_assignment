@@ -7,7 +7,7 @@ export const HistoryList = ({ props, func }) => {
   const cookies = new Cookies();
   const token = cookies.get('jwt');
   const handleDelete = async () => {
-    axios.put(`http://localhost:8080/users/delete/history/${_id}`, {},{
+    axios.put(`https://bmi-assignment.vercel.app/users/delete/history/${_id}`, {},{
       headers: {
         'Authorization': 'Bearer ' + token,
         'Content-Type': 'application/json'

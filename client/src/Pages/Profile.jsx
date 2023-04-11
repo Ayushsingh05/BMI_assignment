@@ -10,7 +10,7 @@ export const Profile = () => {
   const token= cookies.get('jwt');
 
   useEffect(() => {
-    axios.get(`http://localhost:8080/users/loggedin`,{
+    axios.get(`https://bmi-assignment.vercel.app/users/loggedin`,{
       headers: {
         'Authorization': 'Bearer ' + token,
         'Content-Type': 'application/json'

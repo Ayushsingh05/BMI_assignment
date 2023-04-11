@@ -48,7 +48,7 @@ export const Calculator = () => {
   const token= cookies.get('jwt')
 
   const handleCalculateClick = async () => {
-    axios.post('http://localhost:8080/users/bmi', {
+    axios.post('https://bmi-assignment.vercel.app/users/bmi', {
       heightFeet:height,weightKg:weight
     }, {
       headers: {
@@ -57,7 +57,7 @@ export const Calculator = () => {
       }
     }).then((res)=>{
       setBmi(res.data)
-        axios.put('http://localhost:8080/users/add/history',{
+        axios.put('https://bmi-assignment.vercel.app/users/add/history',{
           height:height, weight:weight, result:res.data, date:getCurrentTime()
         }, {
           headers: {
