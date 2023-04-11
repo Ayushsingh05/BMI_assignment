@@ -1,0 +1,29 @@
+.history{
+    margin-top: 100px;
+}
+.data-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #ccc;
+    padding: 10px;
+  }
+  
+  .data-cell {
+    flex: 1;
+    padding: 0 10px;
+    text-align: center;
+  }
+  
+  .data-cell:last-child {
+    flex: none;
+  }
+  
+  .data-cell button {
+    background-color: #ff6347 ;
+    border: none;
+    color: #fff;
+    padding: 10px;
+    cursor: pointer;
+  }
+  
