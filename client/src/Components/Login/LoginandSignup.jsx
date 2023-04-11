@@ -3,8 +3,12 @@ import './Login.css';
 import axios from 'axios';
 import { useToast } from '@chakra-ui/react';
 import { Link, useNavigate } from 'react-router-dom';
+import { appContext } from '../../Context/AppContext';
+import Cookies from 'universal-cookie'
 const LoginandSignup = () => {
 
+  const cookies= new Cookies();
+  const { setLoggedIn} = useContext(appContext)
   const toast = useToast();
   const navigate = useNavigate();
 
@@ -52,11 +56,12 @@ const LoginandSignup = () => {
         })
       })
       .catch((error) => {
+        
         setSignupForm({ name: "", email: "", password: "" });
         toast({
           title: 'Error in Signup.',
           position: "top",
-          description: error.response.data.error,
+          description: error.response.data.message,
           status: 'error',
           duration: 1000,
           isClosable: true,
@@ -73,8 +78,12 @@ const LoginandSignup = () => {
     e.preventDefault();
     axios.post('http://localhost:8080/users/login', loginform)
       .then((response) => {
+        cookies.set('jwt' , response.data.token , {
+          maxAge:24 * 60 * 60,
+          path: '/'
+        });
+        setLoggedIn(true);
         setLoginForm({ email: "", password:"" });
-        navigate("/");
         toast({
           title: 'Login Success',
           position: "top",
@@ -89,7 +98,7 @@ const LoginandSignup = () => {
         toast({
           title: 'Error in login',
           position: "top",
-          description: error.response.data.error,
+          description: error.response.data.message,
           status: 'error',
           duration: 1000,
           isClosable: true,
@@ -124,7 +133,7 @@ const LoginandSignup = () => {
                 <input type='email' name='email' value={loginform.email} placeholder='Email Address' onChange={handleLoginFormChange} required />
               </div>
               <div className='field'> 
-                <input type='password' name='email' value={loginform.password} placeholder='Enter Password' onChange={handleLoginFormChange} required />
+                <input type='password' name='password' value={loginform.password} placeholder='Enter Password' onChange={handleLoginFormChange} required />
               </div>
               <div className='field btn'>
                 <div className='btn-layer'></div>
@@ -145,7 +154,7 @@ const LoginandSignup = () => {
                 <input type='email' name='email' value={signupForm.email} placeholder='Email Address' onChange={handleSignupFormChange} required />
               </div>
               <div className='field'>
-                <input type='password' name='email' value={signupForm.password} placeholder='Enter Password' onChange={handleSignupFormChange} required />
+                <input type='password' name='password' value={signupForm.password} placeholder='Enter Password' onChange={handleSignupFormChange} required />
               </div>
               <div className='field btn'>
                 <div className='btn-layer'></div>

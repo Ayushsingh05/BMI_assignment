@@ -147,7 +147,6 @@ const loggedInUser = async (req, res) => {
 
 const calculateBMI = async (req, res) => {
   const { heightFeet, weightKg } = req.body;
-  // Conversion of  height from feet to meters
   const heightMeters = heightFeet / 3.281;
 
   const bmi = weightKg / (heightMeters * heightMeters);
@@ -180,7 +179,6 @@ const addCalculateHistory = async (req, res) => {
 const deleteCalculateHstory = async (req, res) => {
   const userId = req.user._id;
   const calcId = req.params.id;
-
   try {
     const user = await userModel.findById(userId);
 

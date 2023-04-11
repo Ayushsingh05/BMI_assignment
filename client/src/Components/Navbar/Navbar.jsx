@@ -1,12 +1,15 @@
 import React, { useContext, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import "./Navbar.css";
+import Cookies from 'universal-cookie'
 import { HiBars3 } from 'react-icons/hi2'
 import { FaTimes } from 'react-icons/fa'
+import { appContext } from "../../Context/AppContext";
 function Navbar() {
     const [click, setClick] = useState(false);
     const navigate = useNavigate();
-    // const { loggedIn, setLoggedIn } = useContext(appContext)
+    const cookies = new Cookies();
+    const { loggedIn, setLoggedIn } = useContext(appContext)
 
     const handleClick = () => setClick(!click);
     return (
@@ -16,7 +19,7 @@ function Navbar() {
                     <NavLink
                         exact to="/"
                         className="nav-logo">
-                       BMICalc
+                        BMICalc
                         <i className="fas fa-code"></i>
                     </NavLink>
 
@@ -45,19 +48,31 @@ function Navbar() {
                         <li className="nav-item">
                             <NavLink
                                 exact
+                                to="/profile"
+                                activeClassName="active"
+                                className="nav-links"
+                                onClick={handleClick}
+                            >
+                                Profile
+                            </NavLink>
+                        </li>
+                        <li className="nav-item">
+                            <NavLink
+                                exact
                                 to="/login"
                                 activeClassName="active"
                                 className="nav-links"
                                 onClick={() => {
-                                    // if (loggedIn) {
-                                    //     navigate('/login')
-                                    //     setLoggedIn(undefined)
-                                    // }
+                                    if (loggedIn) {
+                                        cookies.remove('jwt');
+                                        navigate('/login')
+                                        setLoggedIn(false)
+                                    }
                                     handleClick()
                                 }}
                             >
-                                Login
-                                {/* {loggedIn ? "Logout" : "Login"} */}
+
+                                {loggedIn ? "Logout" : "Login"}
                             </NavLink>
                         </li>
                     </ul>
